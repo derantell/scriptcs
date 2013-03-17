@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ScriptCs
 {
@@ -23,6 +25,9 @@ namespace ScriptCs
             var rs = new List<string>();
             var loads = new List<string>();
 
+            if (LiterateScriptCsExtensions.Contains(Path.GetExtension(path)))
+                entryFile = FilterLines(entryFile);
+
             var parsed = ParseFile(path, entryFile, ref usings, ref rs, ref loads);
 
             var result = GenerateRs(rs);
@@ -40,6 +45,29 @@ namespace ScriptCs
             result += parsed;
 
             return result;
+        }
+
+        private const string LiterateScriptCsExtensions = ".litcsx.md.mdown.markdown";
+
+        protected virtual string[] FilterLines(IEnumerable<string> fileLines) {
+            var isInsideFence = false;
+            var csLines = new List<string>();
+
+            foreach (var line in fileLines)
+            {
+                if (Regex.IsMatch(line, @"^```(?:csharp\b|\s*$)"))
+                {
+                    isInsideFence = !isInsideFence;
+                    continue;
+                }
+
+                if (isInsideFence || Regex.IsMatch(line, @"^(?:\t| {4})"))
+                {
+                    csLines.Add(line);
+                }
+            }
+
+            return csLines.ToArray();
         }
 
         protected virtual string GenerateUsings(ICollection<string> usingLines)
