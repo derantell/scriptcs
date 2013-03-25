@@ -49,6 +49,7 @@
     <Compile Include="IScriptEngine.cs" />
     <Compile Include="IScriptPackResolver.cs" />
     <Compile Include="IScriptExecutor.cs" />
+    <Compile Include="MarkdownAwareFileSystem.cs" />
     <Compile Include="PackageAssemblyResolver.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Package\PackageInstaller.cs" />

@@ -24,7 +24,7 @@ namespace ScriptCs
             var types = new[]
                 {
                     typeof (ScriptHostFactory),
-                    typeof (FileSystem),
+                    //typeof (FileSystem),
                     typeof (PackageAssemblyResolver),
                     typeof (PackageContainer),
                     typeof (FilePreProcessor),
@@ -34,6 +34,9 @@ namespace ScriptCs
                 };
 
             builder.RegisterTypes(types).AsImplementedInterfaces();
+            builder.RegisterType<FileSystem>().Named<IFileSystem>("fileSystem");
+            builder.RegisterDecorator<IFileSystem>(
+                (c, inner) => new MarkdownAwareFileSystem(inner), fromKey: "fileSystem");
 
             if (_debug)
             {
@@ -45,7 +48,7 @@ namespace ScriptCs
                 builder.RegisterType<ScriptExecutor>().As<IScriptExecutor>();
                 builder.RegisterType<RoslynScriptEngine>().As<IScriptEngine>();
             }
-
+            
             builder.RegisterType<ScriptServiceRoot>().As<ScriptServiceRoot>();
 
             var catalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory, "*.pack.dll");
