@@ -30,6 +30,11 @@ namespace ScriptCs {
         }
 
 
+        public void DeleteDirectory(string path) {
+            _wrappedFileSystem.DeleteDirectory(path);
+        }
+
+
         public string ReadFile(string path) {
             if (!LiteralScriptCsFilter.ShouldHandle(path)) {
                 return _wrappedFileSystem.ReadFile(path);
@@ -80,6 +85,11 @@ namespace ScriptCs {
         }
 
 
+        public void FileDelete(string path) {
+            _wrappedFileSystem.FileDelete(path);
+        }
+
+
         public Stream CreateFileStream(string filePath, FileMode mode) {
             return _wrappedFileSystem.CreateFileStream(filePath, mode);
         }
@@ -89,9 +99,10 @@ namespace ScriptCs {
     }
 
     public class LiteralScriptCsFilter {
-        public static bool ShouldHandle(string path) 
-        {
-            return LiterateScriptCsExtensions.Contains(Path.GetExtension(path) ?? "");
+        public static bool ShouldHandle(string path) {
+            var extension = Path.GetExtension(path);
+            return !string.IsNullOrWhiteSpace(extension) 
+                && LiterateScriptCsExtensions.Contains(extension + ".");
         }
 
         public static string[] FilterLines(IEnumerable<string> fileLines) 
@@ -116,6 +127,6 @@ namespace ScriptCs {
             return csLines.ToArray();
         }
 
-        private const string LiterateScriptCsExtensions = ".litcsx.md.mdown.markdown";
+        private const string LiterateScriptCsExtensions = ".litcsx.md.mdown.markdown.";
     }
 }
