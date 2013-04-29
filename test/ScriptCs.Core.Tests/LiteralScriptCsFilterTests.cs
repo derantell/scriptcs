@@ -40,7 +40,7 @@ namespace ScriptCs.Tests {
             [Fact]
             public void ShouldReturnFalseWhenExtensionIsOtherThanSupported() {
                 var shouldHandle = LiteralScriptCsFilter.ShouldHandle(@"c:\foo\bar.mdo");
-                Assert.False(shouldHandle);
+                Assert.False(shouldHandle); 
             }
         } 
     }
