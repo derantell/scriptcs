@@ -1,6 +1,13 @@
 ﻿using System.Collections.Generic;
+<<<<<<< HEAD
+using System.IO;
+﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+=======
 using System.Linq;
 using Common.Logging;
+>>>>>>> 3914ca0de34efaec66db51da2093dab73ea2ccdd
 
 namespace ScriptCs
 {
@@ -27,8 +34,12 @@ namespace ScriptCs
             var usings = new List<string>();
             var rs = new List<string>();
             var loads = new List<string>();
+<<<<<<< HEAD
           
+=======
+
             _logger.DebugFormat("{0} - Parsing ", path);
+>>>>>>> 3914ca0de34efaec66db51da2093dab73ea2ccdd
             var parsed = ParseFile(path, entryFile, ref usings, ref rs, ref loads);
 
             _logger.DebugFormat("{0} - Generating references (#r)", path);

@@ -48,10 +48,14 @@ namespace ScriptCs
                 };
 
             builder.RegisterTypes(types).AsImplementedInterfaces();
+<<<<<<< HEAD
             builder.RegisterType<FileSystem>().Named<IFileSystem>("fileSystem");
             builder.RegisterDecorator<IFileSystem>(
                 (c, inner) => new MarkdownAwareFileSystem(inner), fromKey: "fileSystem");
+
+=======
             
+>>>>>>> 3914ca0de34efaec66db51da2093dab73ea2ccdd
             if (_debug)
             {
                 builder.RegisterType<DebugScriptExecutor>().As<IScriptExecutor>();
